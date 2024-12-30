@@ -132,13 +132,13 @@ conda env create -f environment.yml
 ```
 AV-NAS/
 │
-├── json/               		# Dataset configurations
-│   ├── Anet.json				# ActivityNet dataset configuration
-│   └── FCVID.json      		# FCVID dataset configuration
+├── json/               	# Dataset configurations
+│   ├── Anet.json		# ActivityNet dataset configuration
+│   └── FCVID.json      	# FCVID dataset configuration
 │
-├── loader/            			# Data loading
+├── loader/            		# Data loading
 │   ├── dataset_per_label.py	# Load data		
-│   └── path.py      			# Load data and log paths
+│   └── path.py      		# Load data and log paths
 │
 ├── utils/                      # Utilities
 │   ├── calc_probs.py           # Calculate operator probabilities
@@ -156,13 +156,13 @@ AV-NAS/
 │   ├── hygr_model_AttDetail.py # Search space used for searching
 │   └── mixed_AttDetail.py      # Searchable cells
 |
-├── loss/						# Loss function
+├── loss/			# Loss function
 │   └── loss.py
 │
 ├── search_p_AttDetail.py       # Search function
-├── train_p_AttDetail.py		# Retrain function
+├── train_p_AttDetail.py	# Retrain function
 ├── environment.yml             # Conda environment configuration
-└── README.md          			# Project documentation (this file)
+└── README.md          		# Project documentation (this file)
 ```
 
   ## Search
@@ -180,7 +180,7 @@ AV-NAS/
   self.DATASET_CONFIG = './json/Anet.json'  #  modify the DATASET_CONFIG attribute in the Path class located in ./loader/path.py.
   python search_p_AttDetail.py
   ```
-**Note**: During the search phase, a different learning rate is typically used compared to retraining. Ensure that the learning rate for the search phase is appropriately configured in your model or configuration file. In our paper, the learning rate for search was set to 0.001. The table below summarizes the training details for the proposed AV-NAS method in Search stage.[table](#table1)
+**Note**: During the search phase, a different learning rate is typically used compared to retraining. Ensure that the learning rate for the search phase is appropriately configured in your model or configuration file. In our paper, the learning rate for search was set to 0.001. The [table](#table1) summarizes the training details for the proposed AV-NAS method in Search stage.
 
 
   ## Retrain
@@ -196,12 +196,9 @@ AV-NAS/
   python train_p_AttDetail.py
   ```
 
-**Note**: During the retrain phase, a different learning rate is typically used compared to search.. In our paper, the learning rate for retrain was set to 0.0001. The table below summarizes the training details for the proposed AV-NAS method in Finetuning stage.
+**Note**: During the retrain phase, a different learning rate is typically used compared to search. In our paper, the learning rate for retrain was set to 0.0001. The [table](#table1) below summarizes the training details for the proposed AV-NAS method in Finetuning stage.
 
 
-
-
-The table below summarizes the training details for the proposed AV-NAS method, including both the **Coarse Search** and **Finetuning** stages.
 <a name="table1"></a>
 | **Stage**                   | **Search**                            | **Finetuning**                       |
 |-----------------------------|----------------------------------------|--------------------------------------|
