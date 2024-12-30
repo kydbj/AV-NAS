@@ -23,7 +23,17 @@ conda env create -f environment.yml
 	| FCVID       | [Link](https://d.kuku.lu/uhbzmzn44) |
 	| ActivityNet | [Link](https://d.kuku.lu/3uaggpxry) |
 
-2. Feauture Extraction
+   The table below summarizes the key statistics of the two datasets, **ActivityNet** and **FCVID**.
+   
+	| **Items\Datasets**        | **ActivityNet** | **FCVID**  |
+	|---------------------------|-----------------|------------|
+	| **Training**             | 10,023          | 45,508     |
+	| **Validation**           | 2,512           | 22,754     |
+	| **Testing**              | 2,413           | 22,754     |
+	| **Categories**           | 200             | 239        |
+	| **Total (Videos)**       | 14,948          | 91,016     |
+
+3. Feauture Extraction
 
     2.1 **Video Processing**:
     - For each video, uniformly extract 25 frames.
@@ -80,7 +90,7 @@ conda env create -f environment.yml
       - Each group contains a dataset named vectors.
       - The vectors dataset contains the image or audio features of the video, with a shape of (25, 768) and a type of float32.
     
-3. Dataset Splitting
+4. Dataset Splitting
    Split the dataset into training, validation, and test sets evenly based on categories. The file IDs for different data splits are stored in `train.txt`, `test.txt`, and `val.txt` files respectively.
    
    **ActivityNet** contents are as follows, with each line including: videoname, video frame count, category.
@@ -99,7 +109,7 @@ conda env create -f environment.yml
    ...
    ```
    
-4. Configure the **Anet.json** and **fcvid.json** file in ./Json/
+5. Configure the **Anet.json** and **fcvid.json** file in ./Json/
    ```
    {
    "dataset":  dataset ("actnet" or "fcvid")
