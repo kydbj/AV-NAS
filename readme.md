@@ -4,6 +4,8 @@
 - [Project Structure](#Project-Structure)
 - [Search](#Search)
 - [Re-train](#Re-train)
+
+
 ## Getting Started
 1. Clone this repository:
 
@@ -178,7 +180,7 @@ AV-NAS/
   self.DATASET_CONFIG = './json/Anet.json'  #  modify the DATASET_CONFIG attribute in the Path class located in ./loader/path.py.
   python search_p_AttDetail.py
   ```
-**Note**: During the search phase, a different learning rate is typically used compared to retraining. Ensure that the learning rate for the search phase is appropriately configured in your model or configuration file. In our paper, the learning rate for search was set to 0.001.
+**Note**: During the search phase, a different learning rate is typically used compared to retraining. Ensure that the learning rate for the search phase is appropriately configured in your model or configuration file. In our paper, the learning rate for search was set to 0.001. The table below summarizes the training details for the proposed AV-NAS method in Search stage.
 
 
   ## Retrain
@@ -194,5 +196,19 @@ AV-NAS/
   python train_p_AttDetail.py
   ```
 
-**Note**: During the retrain phase, a different learning rate is typically used compared to search.. In our paper, the learning rate for retrain was set to 0.0001.
+**Note**: During the retrain phase, a different learning rate is typically used compared to search.. In our paper, the learning rate for retrain was set to 0.0001. The table below summarizes the training details for the proposed AV-NAS method in Finetuning stage.
 
+
+
+
+The table below summarizes the training details for the proposed AV-NAS method, including both the **Coarse Search** and **Finetuning** stages.
+
+| **Stage**                   | **Search**                            | **Finetuning**                       |
+|-----------------------------|----------------------------------------|--------------------------------------|
+| **Optimizer**               | Adam                                  | Adam                                 |
+| **Learning Rate**           | 0.001                                 | 0.0001                               |
+| **Batch Size**              | 128                                   | 128                                  |
+| **Training Epochs**         | 300                                   | 300                                  |
+| **Temperature (τ)**         | 0.1                                   | 0.1                                  |
+| **Initialization**          | Random                                | Inherited from **Coarse Search**     |
+| **Hardware**                | Nvidia Tesla V100 (32GB memory each)  | Nvidia Tesla V100 (32GB memory each) |
