@@ -180,7 +180,7 @@ AV-NAS/
   self.DATASET_CONFIG = './json/Anet.json'  #  modify the DATASET_CONFIG attribute in the Path class located in ./loader/path.py.
   python search_p_AttDetail.py
   ```
-**Note**: During the search phase, a different learning rate is typically used compared to retraining. Ensure that the learning rate for the search phase is appropriately configured in your model or configuration file. In our paper, the learning rate for search was set to 0.001. The table below summarizes the training details for the proposed AV-NAS method in Search stage.
+**Note**: During the search phase, a different learning rate is typically used compared to retraining. Ensure that the learning rate for the search phase is appropriately configured in your model or configuration file. In our paper, the learning rate for search was set to 0.001. The table below summarizes the training details for the proposed AV-NAS method in Search stage.[table](#table1)
 
 
   ## Retrain
@@ -202,7 +202,7 @@ AV-NAS/
 
 
 The table below summarizes the training details for the proposed AV-NAS method, including both the **Coarse Search** and **Finetuning** stages.
-
+<a name="table1"></a>
 | **Stage**                   | **Search**                            | **Finetuning**                       |
 |-----------------------------|----------------------------------------|--------------------------------------|
 | **Optimizer**               | Adam                                  | Adam                                 |
