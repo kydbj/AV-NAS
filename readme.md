@@ -165,7 +165,7 @@ AV-NAS/
 └── README.md          		# Project documentation (this file)
 ```
 
-  ## Search
+  ## Coarse Search
 
   To search on FCVID:
 
@@ -183,7 +183,12 @@ AV-NAS/
 **Note**: During the search phase, a different learning rate is typically used compared to retraining. Ensure that the learning rate for the search phase is appropriately configured in your model or configuration file. In our paper, the learning rate for search was set to 0.001. The [table](#table1) summarizes the training details for the proposed AV-NAS method in Search stage.
 
 
-  ## Retrain
+  ## Pruning
+  ```bash
+  self.CKPT_PATH = 'LogXX'   # modify the CKPT_PATH attribute in the CfgSearch class located in train_p_AttDetail.py. Replace 'XX' with specific numbers. After running the train_p_AttDetail.py, pruning will be executed automatically.
+  ```
+
+  ## Finetuning
 
   To retrain on FCVID:
   ```bash
@@ -200,7 +205,7 @@ AV-NAS/
 
 
 <a name="table1"></a>
-| **Stage**                   | **Search**                            | **Finetuning**                       |
+| **Stage**                   | **Coarse Search**                            | **Finetuning**                       |
 |-----------------------------|----------------------------------------|--------------------------------------|
 | **Optimizer**               | Adam                                  | Adam                                 |
 | **Learning Rate**           | 0.001                                 | 0.0001                               |
