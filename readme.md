@@ -2,8 +2,9 @@
 - [Getting Started](#getting-started)
 - [Data Processing](#data-processing)
 - [Project Structure](#Project-Structure)
-- [Search](#Search)
-- [Re-train](#Re-train)
+- [Coarse Search](#Coarse-Search)
+- [Pruning](#Pruning)
+- [Finetuning](#Finetuning)
 
 
 ## Getting Started
