@@ -8,7 +8,7 @@
 
 
 ## Getting Started
-1. Clone this repository: ok
+1. Clone this repository:
 
 2. Create a conda environment and install the dependencies:
 
