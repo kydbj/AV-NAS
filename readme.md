@@ -1,8 +1,9 @@
 # AV-NAS
 This repository is the PyTorch implementation of SIGIR 2025 (CCF A) paper: "AV-NAS: Audio-Visual Multi-Level Semantic Neural Architecture Search for Video Hashing".
 <p align="center">
-  <img src="./img/search-space.svg">
+    <img src="./img/search-sapce.svg" width="80%">
 </p>
+We proposes an innovative neural architecture search (NAS) framework designed to optimize architectures for audio-visual video hashing tasks. The novelty of AV-NAS lies in its integration of audio and visual data through a multi-level semantic search space, which includes modules such as MLPs, CNNs, Transformers, and the recently proposed Mamba structure. We introduce a differentiable NAS methodology using a "coarse search-pruning-fine-tuning" strategy, effectively addressing the complexities inherent to multimodal video hashing.
 
 
 ## Catalogue
