@@ -8,8 +8,8 @@ We proposes an innovative neural architecture search (NAS) framework designed to
 
 ## Catalogue
 - [Getting Started](#getting-started)
-- [Data Processing](#data-processing)
 - [Project Structure](#Project-Structure)
+- [Data Processing](#data-processing)
 - [Coarse Search](#Coarse-Search)
 - [Pruning](#Pruning)
 - [Finetuning](#Finetuning)
@@ -23,6 +23,48 @@ We proposes an innovative neural architecture search (NAS) framework designed to
 ```
 	conda env create -f environment.yml
 ```
+
+
+## Project Structure
+
+  This is the overall structure of the project:
+
+```
+AV-NAS/
+│
+├── json/               	# Dataset configurations
+│   ├── Anet.json		# ActivityNet dataset configuration
+│   └── FCVID.json      	# FCVID dataset configuration
+│
+├── loader/            		# Data loading
+│   ├── dataset_per_label.py	# Load data		
+│   └── path.py      		# Load data and log paths
+│
+├── utils/                      # Utilities
+│   ├── calc_probs.py           # Calculate operator probabilities
+│   ├── eval.py                 # Metric calculation
+│   ├── log.py                  # Log files
+│   └── ops_adapter_new.py      # Alternative operators
+│
+├── model/
+├── model/                      # Model files
+│   ├── cls.pt                  # CLS token
+│   ├── config.json             # Configuration file
+│   ├── modules_new1.py         # Basic operations
+│   ├── pscan.py                # Mamba model
+│   ├── full_model_AttDetail.py # Specific model used for retraining
+│   ├── hygr_model_AttDetail.py # Search space used for searching
+│   └── mixed_AttDetail.py      # Searchable cells
+|
+├── loss/			# Loss function
+│   └── loss.py
+│
+├── search_p_AttDetail.py       # Search function
+├── train_p_AttDetail.py	# Retrain function
+├── environment.yml             # Conda environment configuration
+└── README.md          		# Project documentation (this file)
+```
+
 
 ## Data Processing
 1. Download Datasets
@@ -102,6 +144,7 @@ We proposes an innovative neural architecture search (NAS) framework designed to
       - The vectors dataset contains the image or audio features of the video, with a shape of (25, 768) and a type of float32.
     
 4. Dataset Splitting
+   
    Split the dataset into training, validation, and test sets evenly based on categories. The file IDs for different data splits are stored in `train.txt`, `test.txt`, and `val.txt` files respectively.
    
    **ActivityNet** contents are as follows, with each line including: videoname, video frame count, category.
@@ -120,7 +163,7 @@ We proposes an innovative neural architecture search (NAS) framework designed to
    ...
    ```
    
-5. Configure the **Anet.json** and **fcvid.json** file in ./Json/
+6. Configure the **Anet.json** and **fcvid.json** file in ./Json/
    ```
    {
    "dataset":  dataset ("actnet" or "fcvid")
@@ -132,49 +175,9 @@ We proposes an innovative neural architecture search (NAS) framework designed to
    "retrieval_list": "path to the databese set (train set) file"
    }
    ```
-   
 
-  ## Project Structure
 
-  This is the overall structure of the project:
-
-```
-AV-NAS/
-│
-├── json/               	# Dataset configurations
-│   ├── Anet.json		# ActivityNet dataset configuration
-│   └── FCVID.json      	# FCVID dataset configuration
-│
-├── loader/            		# Data loading
-│   ├── dataset_per_label.py	# Load data		
-│   └── path.py      		# Load data and log paths
-│
-├── utils/                      # Utilities
-│   ├── calc_probs.py           # Calculate operator probabilities
-│   ├── eval.py                 # Metric calculation
-│   ├── log.py                  # Log files
-│   └── ops_adapter_new.py      # Alternative operators
-│
-├── model/
-├── model/                      # Model files
-│   ├── cls.pt                  # CLS token
-│   ├── config.json             # Configuration file
-│   ├── modules_new1.py         # Basic operations
-│   ├── pscan.py                # Mamba model
-│   ├── full_model_AttDetail.py # Specific model used for retraining
-│   ├── hygr_model_AttDetail.py # Search space used for searching
-│   └── mixed_AttDetail.py      # Searchable cells
-|
-├── loss/			# Loss function
-│   └── loss.py
-│
-├── search_p_AttDetail.py       # Search function
-├── train_p_AttDetail.py	# Retrain function
-├── environment.yml             # Conda environment configuration
-└── README.md          		# Project documentation (this file)
-```
-
-  ## Coarse Search
+## Coarse Search
 
   To search on FCVID:
 
@@ -192,12 +195,13 @@ AV-NAS/
 **Note**: During the search phase, a different learning rate is typically used compared to retraining. Ensure that the learning rate for the search phase is appropriately configured in your model or configuration file. In our paper, the learning rate for search was set to 0.001. The [table](#table1) summarizes the training details for the proposed AV-NAS method in Search stage.
 
 
-  ## Pruning
+## Pruning
   ```bash
   self.CKPT_PATH = 'LogXX'   # modify the CKPT_PATH attribute in the CfgSearch class located in train_p_AttDetail.py. Replace 'XX' with specific numbers. After running the train_p_AttDetail.py, pruning will be executed automatically.
   ```
 
-  ## Finetuning
+
+## Finetuning
 
   To retrain on FCVID:
   ```bash
