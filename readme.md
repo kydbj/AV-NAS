@@ -1,3 +1,10 @@
+# AV-NAS
+This repository is the PyTorch implementation of SIGIR 2025 (CCF A) paper: "AV-NAS: Audio-Visual Multi-Level Semantic Neural Architecture Search for Video Hashing".
+<p align="center">
+  <img src="./img/search-space.svg">
+</p>
+
+
 ## Catalogue
 - [Getting Started](#getting-started)
 - [Data Processing](#data-processing)
