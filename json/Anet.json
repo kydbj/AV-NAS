@@ -1,10 +1,10 @@
 {
   "dataset": "actnet",
-  "Image": "act_vit.h5",
-  "Audio": "AST_act.h5",
+  "Image": "{local_path}/act_vit.h5",
+  "Audio": "{local_path}/AST_act.h5",
   "num_class": 200,
-  "train_list": "actnet_train_split.txt",
-  "val_list": "val.txt",
-  "test_list": "test.txt",
-  "retrieval_list": "actnet_train_split.txt"
+  "train_list": "{local_path}/actnet_train_split.txt",
+  "val_list": "{local_path}/val.txt",
+  "test_list": "{local_path}/test.txt",
+  "retrieval_list": "{local_path}/actnet_train_split.txt"
 }
