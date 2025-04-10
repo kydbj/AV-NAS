@@ -5,15 +5,15 @@ import torch
 from torch.utils.data import Dataset
 from torch.utils.data.dataloader import DataLoader
 
-class TrainDataset(Dataset):  #  video_name, frame_count, class_label = line.strip().split(',')[0:3]  这一行要修改一下
+class TrainDataset(Dataset): 
 
     def __init__(self, config_file, image_features, audio_features, pn, phase=""):
         with open(config_file, 'r') as f:
             config = json.load(f)
             f.close()
         self.dataset = config['dataset']
-        self.image_features = image_features # 从h5文件中读取出来的特征,key-value形式
-        self.audio_features = audio_features # 从h5文件中读取出来的特征,key-value形式
+        self.image_features = image_features # key-value
+        self.audio_features = audio_features # key-value
 
         if phase == 'train':
             self.list_file = config['train_list']
@@ -22,13 +22,11 @@ class TrainDataset(Dataset):  #  video_name, frame_count, class_label = line.str
 
         self.pn = pn
 
-        self.data = self.load_videos_from_file(self.list_file) # video_data[1] = [a,b,c,d,...]: 属于第一类的视频名字有a,b,c,d...
+        self.data = self.load_videos_from_file(self.list_file)
         self.classes = list(self.data.keys()) # [1,2,3,4..]
-        self.indexes = self._make_indexes(self.data) #  indexes: [(0,1),(1,1),(2,1),(3,1),...(0,2),(1,2),(2,2),(3,2)]
+        self.indexes = self._make_indexes(self.data) 
 
 
-    # video_data[1] = [a,b,c,d,...] : 属于第一类的视频名字有a,b,c,d...
-    # video_data[2] = [e,f,g,h,...] : 属于第一类的视频名字有e,f,g,h,...
     def load_videos_from_file(self,file_path):
         video_data = {}
         if self.dataset == 'actnet':
@@ -55,8 +53,7 @@ class TrainDataset(Dataset):  #  video_name, frame_count, class_label = line.str
 
         return video_data
 
-    #   video_data[1] = [a,b,c,d,...]； video_data[2] = [a,b,c,d,...]；
-    #   indexes: [(0,1),(1,1),(2,1),(3,1),...(0,2),(1,2),(2,2),(3,2)]
+
     def _make_indexes(self, video_data):
         """
         Create a list of indexes for all videos, maintaining class information.
@@ -70,13 +67,7 @@ class TrainDataset(Dataset):  #  video_name, frame_count, class_label = line.str
         return indexes
 
 
-    # def select_n_elements_from_k_keys(self, divtKeys, K, N):
-    #     selected_keys = random.sample(divtKeys, K)
-    #     all_elements = []
-    #     for key in selected_keys:
-    #         all_elements.extend(self.data[key])
-    #     selected_elements = random.sample(all_elements, N)
-    #     return selected_elements
+
     def select_n_neg_elements(self, divtKeys, N):
         selected_keys = random.sample(divtKeys, N)
         all_elements = []
@@ -85,7 +76,6 @@ class TrainDataset(Dataset):  #  video_name, frame_count, class_label = line.str
         return all_elements
 
 
-    # index： indexes: [(0,1),(1,1),(2,1),(3,1),...(0,2),(1,2),(2,2),(3,2)]中的下标，整体下标
     def __getitem__(self, index):
 
 
@@ -101,7 +91,6 @@ class TrainDataset(Dataset):  #  video_name, frame_count, class_label = line.str
         neg_classes = [cls for cls in self.classes if cls != class_label]
         negs = self.select_n_neg_elements(neg_classes, neg_num)
 
-        # 返回特征
         anchorI, anchorA = self.image_features[anchor], self.audio_features[anchor]
         posI, posA = self.image_features[pos], self.audio_features[pos]
         negI = []
@@ -127,7 +116,6 @@ class QRDataset(Dataset):
 
 
         self.dataset = config['dataset']
-        # 数据名称
         if phase == 'valid':
             self.list_file = config['val_list']
         elif phase == 'test':
@@ -139,11 +127,10 @@ class QRDataset(Dataset):
         self.audio_features = audio_features
 
 
-        self.video_data = self.load_videos_from_file(self.list_file) # 名称加载成字典
-        self.indexes = self._make_indexes(self.video_data) # (类别，名称)
+        self.video_data = self.load_videos_from_file(self.list_file) 
+        self.indexes = self._make_indexes(self.video_data)
 
 
-    # 将.txt文件加载成字典
     def load_videos_from_file(self,file_path):
         video_data = {}
         if self.dataset == 'actnet':
@@ -186,16 +173,16 @@ class QRDataset(Dataset):
 
 
     def __getitem__(self, index):
-        video_index, class_label = self.indexes[index] #
-        video = self.video_data[class_label][video_index] # video 是一个视频名字
+        video_index, class_label = self.indexes[index] 
+        video = self.video_data[class_label][video_index] 
 
         image_features = self.image_features[video]
         audio_features = self.audio_features[video]
 
         if self.dataset == 'actnet':
-            target_onehot = torch.nn.functional.one_hot(torch.tensor(class_label), num_classes=self.num_classes).float() # 标签独热码
+            target_onehot = torch.nn.functional.one_hot(torch.tensor(class_label), num_classes=self.num_classes).float() 
         elif self.dataset == 'fcvid':
-            target_onehot = torch.nn.functional.one_hot(torch.tensor(class_label-1), num_classes=self.num_classes).float() # 标签独热码
+            target_onehot = torch.nn.functional.one_hot(torch.tensor(class_label-1), num_classes=self.num_classes).float() 
 
         return image_features,audio_features,target_onehot, index
 
@@ -262,7 +249,7 @@ def load_data(data_set_config,batch_size,num_workers,pn):
     image_fratures,audio_features = load_h5_file_to_memory(config['Image'],config['Audio'])
 
     train_dataloader = DataLoader(
-        TrainDataset(config_file=data_set_config,   # 输出 特征和对应标签
+        TrainDataset(config_file=data_set_config,  
                      image_features=image_fratures,
                      audio_features=audio_features,
                      pn=pn,
@@ -275,7 +262,7 @@ def load_data(data_set_config,batch_size,num_workers,pn):
     )
 
     valid_dataloader = DataLoader(
-        TrainDataset(config_file=data_set_config,   # 输出 特征和对应标签
+        TrainDataset(config_file=data_set_config,   
                      image_features=image_fratures,
                      audio_features=audio_features,
                      pn=pn,
@@ -321,7 +308,7 @@ def load_darts_data(data_set_config,batch_size,num_workers,pn):
         f.close()
     image_fratures,audio_features = load_h5_file_to_memory(config['Image'],config['Audio'])
 
-    train_data = TrainDataset(config_file=data_set_config,  # 输出 特征和对应标签
+    train_data = TrainDataset(config_file=data_set_config, 
                  image_features=image_fratures,
                  audio_features=audio_features,
                  pn=pn,
@@ -385,7 +372,7 @@ def load_retrain_data(data_set_config,batch_size,num_workers,pn):
     image_fratures,audio_features = load_h5_file_to_memory(config['Image'],config['Audio'])
 
     train_dataloader = DataLoader(
-        TrainDataset(config_file=data_set_config,   # 输出 特征和对应标签
+        TrainDataset(config_file=data_set_config,   
                      image_features=image_fratures,
                      audio_features=audio_features,
                      pn=pn,
