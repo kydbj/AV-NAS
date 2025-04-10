@@ -1,10 +1,10 @@
 {
   "dataset": "fcvid",
-  "Image": "fcvid_vit_train.h5",
-  "Audio": "AST_fcvid_5s.h5",
+  "Image": "{local_dir}/fcvid_vit_train.h5",
+  "Audio": "{local_dir}/AST_fcvid_5s.h5",
   "num_class": 239,
-  "train_list": "train.txt",
-  "val_list": "val.txt",
-  "test_list": "test.txt",
-  "retrieval_list": "train.txt"
+  "train_list": "{local_dir}/train.txt",
+  "val_list": "{local_dir}/val.txt",
+  "test_list": "{local_dir}/test.txt",
+  "retrieval_list": "{local_dir}/train.txt"
 }
