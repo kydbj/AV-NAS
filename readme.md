@@ -13,6 +13,8 @@ We proposes an innovative neural architecture search (NAS) framework designed to
 - [Coarse Search](#Coarse-Search)
 - [Pruning](#Pruning)
 - [Finetuning](#Finetuning)
+- [Citation](#Citation)
+- [Contact](#Contact)
 
 
 ## Getting Started
@@ -227,3 +229,22 @@ AV-NAS/
 | **Temperature (τ)**         | 0.1                                   | 0.1                                  |
 | **Initialization**          | Random                                | Inherited from **Coarse Search**     |
 | **Hardware**                | Nvidia Tesla V100 (32GB memory each)  | Nvidia Tesla V100 (32GB memory each) |
+
+ ## Citation
+
+If you find this repository useful, please consider citing our work:
+
+```
+Yong Chen, Yuxiang Zhou, Hailiang Dong, Rui Liu, Zhouchen Lin, Dell Zhang. AV-NAS: Audio-Visual Multi-Level Semantic Neural Architecture Search for Video Hashing. SIGIR 2025.
+```
+
+ ## Contact
+
+For questions and further information about this research, please don't hesitate to contact us:
+
+| Name | Email |
+|------|-------|
+| Yong Chen | yong.chen@bupt.edu.cn |
+| Yuxiang Zhou | yuxiang.zhou@bupt.edu.cn |
+
+We welcome collaboration opportunities and are happy to provide additional details about our work.
